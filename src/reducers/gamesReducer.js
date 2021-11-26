@@ -11,18 +11,15 @@ const gamesReducer = (state = initState, action) => {
   switch (action.type) {
     //cuando se hace dispatch (fire) de fetch games, se devolverá el estado
     case "FETCH_GAMES":
-      return { ...state };
+      return {
+        ...state,
+        popular: action.payload.popular,
+        upcoming: action.payload.upcoming,
+        newGames: action.payload.newGames,
+      };
     default:
       return { ...state };
   }
-};
-
-//action => objs that describes what you wwhant to do
-//action creator=> funcion que devuelve una action
-const fetchGames = () => {
-  return {
-    type: "FETCH_GAMES",
-  };
 };
 
 export default gamesReducer;
