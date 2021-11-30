@@ -1,3 +1,7 @@
+# Games Search
+
+Ese proyecto desarrollado en react es para consultar juegos (populars, upcoming and released)
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
