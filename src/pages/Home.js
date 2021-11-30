@@ -24,7 +24,9 @@ const Home = () => {
     dispatch(loadGames());
   }, [dispatch]);
   //get that data back - > creamos una constante para cada uno de los tipos de juegos
-  const { popular, newGames, upcoming } = useSelector((state) => state.games);
+  const { popular, newGames, upcoming, searched } = useSelector(
+    (state) => state.games
+  );
 
   return (
     <GameList>
@@ -32,6 +34,24 @@ const Home = () => {
         <AnimatePresence>
           {pathID && <GameDetail pathID={pathID} />}
         </AnimatePresence>
+        {searched.length ? (
+          <div className="searched">
+            <h2>Searched Games</h2>
+            <Games>
+              {searched.map((game) => (
+                <Game
+                  name={game.name}
+                  released={game.released}
+                  id={game.id}
+                  image={game.background_image}
+                  key={game.id}
+                />
+              ))}
+            </Games>
+          </div>
+        ) : (
+          ""
+        )}
         <h2>Upcoming Games</h2>
         <Games>
           {upcoming.map((game) => (
@@ -94,3 +114,5 @@ export default Home;
 
 //el animatePresence es para animar un componente, y para eso hay que envolverlo con los tags. Además, el componente animado tiene que tener un toggle, y de ahi hay que envolver los dos componentes (el que cambia y el otro con animateSharedLayout)
 //los dos elementos que queremos transicionar tienen que tener un id (el mismo id)
+
+//{searched.length ? ( si el lenght del searched es 0 no va a imprimir nada, mientras que si hay algo pues sera impreso
