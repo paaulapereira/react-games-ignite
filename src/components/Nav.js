@@ -2,6 +2,8 @@ import React, { useState } from "react";
 //animation
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { fadeIn } from "../animations";
+//img
 import logo from "../img/logo.svg";
 //redux and routes
 import { fetchSeacrh } from "../actions/gamesAction";
@@ -26,7 +28,7 @@ const Nav = () => {
     dispatch({ type: "CLEAR_SEARCHED" });
   };
   return (
-    <StyledNav>
+    <StyledNav variants={fadeIn} initial="hidden" animate="show">
       <Logo onClick={clearSearched}>
         <img src={logo} alt="logo" />
         <h1>Ignite Games</h1>
