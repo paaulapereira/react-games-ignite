@@ -6,8 +6,9 @@ import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 //router
 import { useNavigate } from "react-router-dom"; //para poder manipular la ubicacion de la pagina
+import { smallImage } from "../util"; //resize image
 
-const GameDetail = () => {
+const GameDetail = ({ pathID }) => {
   const navigate = useNavigate(); //para poder cambiar el link de la pagina a la default (por el navigate)
   //exit detail
   const exitDetailHandler = (e) => {
@@ -26,10 +27,10 @@ const GameDetail = () => {
     <>
       {!isLoading && (
         <CardShadow className="shadow" onClick={exitDetailHandler}>
-          <Detail>
+          <Detail layoutId={pathID}>
             <Stats>
               <div className="rating">
-                <h3>{game.name}</h3>
+                <motion.h3 layoutId={`title ${pathID}`}>{game.name}</motion.h3>
                 <p>Rating: {game.rating}</p>
               </div>
               <Info>
@@ -42,14 +43,22 @@ const GameDetail = () => {
               </Info>
             </Stats>
             <Media>
-              <img src={game.background_image} alt="background" />
+              <motion.img
+                layoutId={`image ${pathID}`}
+                src={smallImage(game.background_image, 1280)}
+                alt="background"
+              />
             </Media>
             <Description>
               <p>{game.description_raw}</p>
             </Description>
             <div className="gallery">
               {screen.results.map((screen) => (
-                <img src={screen.image} alt="screenshot" key={screen.id} />
+                <img
+                  src={smallImage(screen.image, 1280)}
+                  alt="screenshot"
+                  key={screen.id}
+                />
               ))}
             </div>
           </Detail>
@@ -80,6 +89,7 @@ const CardShadow = styled(motion.div)`
   &::-webkit-scrollbar-track {
     background: white;
   }
+  z-index: 2;
 `;
 
 const Detail = styled(motion.div)`

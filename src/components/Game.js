@@ -7,8 +7,11 @@ import { useDispatch } from "react-redux";
 import { loadDetail } from "../actions/detailAction";
 //Route
 import { Link } from "react-router-dom";
+//resize smallImage
+import { smallImage } from "../util";
 
 const Game = ({ name, released, image, id }) => {
+  const stringPathID = id.toString();
   //load detail
   const dispatch = useDispatch();
   //funcion para cargar la informacion cuando se haga click
@@ -18,11 +21,15 @@ const Game = ({ name, released, image, id }) => {
   };
 
   return (
-    <StyledGame onClick={loadDetailHandler}>
+    <StyledGame layoutId={stringPathID} onClick={loadDetailHandler}>
       <Link to={`/game/${id}`}>
-        <h3>{name}</h3>
+        <motion.h3 layoutId={`image ${stringPathID}`}>{name}</motion.h3>
         <p>{released}</p>
-        <img src={image} alt={name} />
+        <motion.img
+          layoutId={`image ${stringPathID}`}
+          src={smallImage(image, 640)}
+          alt={name}
+        />
       </Link>
     </StyledGame>
   );
