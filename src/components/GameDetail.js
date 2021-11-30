@@ -4,15 +4,28 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 //Redux
 import { useSelector } from "react-redux";
+//router
+import { useNavigate } from "react-router-dom"; //para poder manipular la ubicacion de la pagina
 
 const GameDetail = () => {
+  const navigate = useNavigate(); //para poder cambiar el link de la pagina a la default (por el navigate)
+  //exit detail
+  const exitDetailHandler = (e) => {
+    const element = e.target;
+    console.log(element);
+    //cuando hacemos click en el shadow (el div que tiene el background transparente), se sale del card
+    if (element.classList.contains("shadow")) {
+      document.body.style.overflow = "auto";
+      navigate("/");
+    }
+  };
   //almacenamos los datos del estado en variables, y luego las enseñamos por pantalla los detalles
   const { screen, game, isLoading } = useSelector((state) => state.detail);
   //{!isLoading && ( eso es porque el componente se enseñe cuando el isLoading sea false
   return (
     <>
       {!isLoading && (
-        <CardShadow>
+        <CardShadow className="shadow" onClick={exitDetailHandler}>
           <Detail>
             <Stats>
               <div className="rating">
