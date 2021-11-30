@@ -2,6 +2,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+//ROUTER -> para poder hacer el cmabio de la informacion de cada juego
+import { BrowserRouter } from "react-router-dom";
 //REDUX SETUP
 //applyMiddleware -> everytime something is dispatched, is going to add in between what's on the applyMiddleware
 //compose -> permite junter multiplos argumentos de una funcion
@@ -23,7 +25,9 @@ const store = createStore(
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")
