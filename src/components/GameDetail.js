@@ -14,6 +14,9 @@ import xbox from "../img/xbox.svg";
 import nintendo from "../img/nintendo.svg";
 import apple from "../img/apple.svg";
 import gamepad from "../img/gamepad.svg";
+//starts
+import starEmpty from "../img/star-empty.png";
+import starFull from "../img/star-full.png";
 
 const GameDetail = ({ pathID }) => {
   const navigate = useNavigate(); //para poder cambiar el link de la pagina a la default (por el navigate)
@@ -50,6 +53,19 @@ const GameDetail = ({ pathID }) => {
         return gamepad;
     }
   };
+  //get starts-> a partir del rating (que lo hemos redondeado a enteros con el math floor), obtenemos una estrella llena por cada numero entero y una vacia hasta completar 5
+  const getStars = () => {
+    const stars = [];
+    const rating = Math.floor(game.rating);
+    for (let i = 1; i <= 5; i++) {
+      if (i <= rating) {
+        stars.push(<img alt="star" key={i} src={starFull}></img>);
+      } else {
+        stars.push(<img alt="star" key={i} src={starEmpty}></img>);
+      }
+    }
+    return stars;
+  };
 
   //almacenamos los datos del estado en variables, y luego las enseñamos por pantalla los detalles
   const { screen, game, isLoading } = useSelector((state) => state.detail);
@@ -63,6 +79,7 @@ const GameDetail = ({ pathID }) => {
               <div className="rating">
                 <motion.h3 layoutId={`title ${pathID}`}>{game.name}</motion.h3>
                 <p>Rating: {game.rating}</p>
+                {getStars()}
               </div>
               <Info>
                 <h3>Platforms</h3>
@@ -145,6 +162,11 @@ const Stats = styled(motion.div)`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  img {
+    width: 2rem;
+    height: 2rem;
+    display: inline;
+  }
 `;
 
 const Info = styled(motion.div)`
