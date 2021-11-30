@@ -7,19 +7,50 @@ import { useSelector } from "react-redux";
 //router
 import { useNavigate } from "react-router-dom"; //para poder manipular la ubicacion de la pagina
 import { smallImage } from "../util"; //resize image
+//IMAGES
+import playstation from "../img/playstation.svg";
+import steam from "../img/steam.svg";
+import xbox from "../img/xbox.svg";
+import nintendo from "../img/nintendo.svg";
+import apple from "../img/apple.svg";
+import gamepad from "../img/gamepad.svg";
 
 const GameDetail = ({ pathID }) => {
   const navigate = useNavigate(); //para poder cambiar el link de la pagina a la default (por el navigate)
   //exit detail
   const exitDetailHandler = (e) => {
     const element = e.target;
-    console.log(element);
     //cuando hacemos click en el shadow (el div que tiene el background transparente), se sale del card
     if (element.classList.contains("shadow")) {
       document.body.style.overflow = "auto";
       navigate("/");
     }
   };
+
+  //funcion que tras obtener el nombre de la plataforma cambia por imagen
+  const getPlatform = (platform) => {
+    switch (platform) {
+      case "PlayStation 4":
+        return playstation;
+      case "PlayStation 5":
+        return playstation;
+      case "Xbox One":
+        return xbox;
+      case "Xbox Series S":
+        return xbox;
+      case "Xbox Series S/X":
+        return xbox;
+      case "PC":
+        return steam;
+      case "Nintendo Switch":
+        return nintendo;
+      case "iOS":
+        return apple;
+      default:
+        return gamepad;
+    }
+  };
+
   //almacenamos los datos del estado en variables, y luego las enseñamos por pantalla los detalles
   const { screen, game, isLoading } = useSelector((state) => state.detail);
   //{!isLoading && ( eso es porque el componente se enseñe cuando el isLoading sea false
@@ -37,7 +68,11 @@ const GameDetail = ({ pathID }) => {
                 <h3>Platforms</h3>
                 <Platforms>
                   {game.platforms.map((data) => (
-                    <h3 key={data.platform.id}>{data.platform.name}</h3>
+                    <img
+                      key={data.platform.id}
+                      src={getPlatform(data.platform.name)}
+                      alt="platform"
+                    />
                   ))}
                 </Platforms>
               </Info>
@@ -80,6 +115,7 @@ const CardShadow = styled(motion.div)`
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 5;
   &::-webkit-scrollbar {
     width: 0.5rem;
   }
@@ -89,7 +125,6 @@ const CardShadow = styled(motion.div)`
   &::-webkit-scrollbar-track {
     background: white;
   }
-  z-index: 2;
 `;
 
 const Detail = styled(motion.div)`
@@ -100,6 +135,7 @@ const Detail = styled(motion.div)`
   position: absolute;
   left: 10%;
   color: black;
+  z-index: 10;
   img {
     width: 100%;
   }
